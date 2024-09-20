@@ -1,0 +1,49 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {  
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();                               //input how many commands you want to pass
+        Stack<Integer> stk_push = new Stack<>();            //declare a stack 
+        Stack<Integer> stk_pop = new Stack<>();             //declare another stack to perform queue operations more ifficiently
+        String a[] = new String[n];                         
+        for(int i = 0; i < n; i++){
+            a[i] = sc.next();
+            if(a[i].equals("peek")){                        //if command is peek print the top element in push_stk
+                if(!stk_push.isEmpty())                     //check stack underflow condition
+                System.out.println(stk_push.peek());
+            }
+            else if(a[i].equals("empty")){                  //it push_stk is empty then print true else print false
+                System.out.println(stk_push.isEmpty());
+            }
+            else if(a[i].equals("pop")){                
+                if(!stk_push.isEmpty())                     //check stack underflow condition
+                System.out.println(stk_push.pop());         //print and remove the element from stack
+            }
+            else if(a[i].equals("push")){
+                int v = sc.nextInt();
+                if(stk_push.isEmpty()){                   //if stk_push is empty then push given value 
+                    stk_push.push(v);
+                }
+                //if not empty then first shift all elements to stk_pop and the add given value and again push all elements of stk_pop into the stk_push
+                else{
+                    while(!stk_push.isEmpty()){             
+                        stk_pop.push(stk_push.pop());
+                    }
+                    stk_push.push(v);
+                    while(!stk_pop.isEmpty()){
+                        stk_push.push(stk_pop.pop());
+                    }
+                }
+            }
+            else{
+                System.out.println(stk_push.isEmpty());     //if no commands are there then print true otherwise false
+            }
+        }        
+    }
+}
